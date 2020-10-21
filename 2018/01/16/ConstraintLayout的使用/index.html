@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="ConstraintLayout 是啥我不多说了，反正我也说不清楚，网上有很多文章，搜一下你会懂的。这里推荐一下郭霖的这篇Android 新特性介绍，ConstraintLayout 完全解析和鸿洋的ConstraintLayout 完全解析 快来优化你的布局吧。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConstraintLayout的使用">
+<meta property="og:url" content="http:&#x2F;&#x2F;wuzhaohui026.github.io&#x2F;2018&#x2F;01&#x2F;16&#x2F;ConstraintLayout%E7%9A%84%E4%BD%BF%E7%94%A8&#x2F;index.html">
+<meta property="og:site_name" content="Hui 朝晖的 Blog">
+<meta property="og:description" content="ConstraintLayout 是啥我不多说了，反正我也说不清楚，网上有很多文章，搜一下你会懂的。这里推荐一下郭霖的这篇Android 新特性介绍，ConstraintLayout 完全解析和鸿洋的ConstraintLayout 完全解析 快来优化你的布局吧。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131141130166">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;%E7%BA%A6%E6%9D%9F%E7%82%B9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131145556811">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131151357987">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131152026400">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131152353011">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131152641075">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131154335224">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131154433162">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131155247710">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131170403918">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131173104320">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131173220664">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131175114687">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131175917401">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131181741223?watermark&#x2F;2&#x2F;text&#x2F;aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70&#x2F;gravity&#x2F;SouthEast">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131182552500">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131184106836">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131203249059">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131203642649">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131204407519">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131223507742">
+<meta property="og:updated_time" content="2018-01-16T15:44:31.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;img.blog.csdn.net&#x2F;20170131141130166">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wuzhaohui026.github.io/2018/01/16/ConstraintLayout的使用/"/>
+
+
+
+
+
+  <title>ConstraintLayout的使用 | Hui 朝晖的 Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hui 朝晖的 Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Android | Java</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuzhaohui026.github.io/2018/01/16/ConstraintLayout%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="W.Z.H">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui 朝晖的 Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ConstraintLayout的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T23:42:30+08:00">
+                2018-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>ConstraintLayout 是啥我不多说了，反正我也说不清楚，网上有很多文章，搜一下你会懂的。这里推荐一下郭霖的这篇<a href="http://blog.csdn.net/guolin_blog/article/details/53122387" target="_blank" rel="noopener">Android 新特性介绍，ConstraintLayout 完全解析</a>和鸿洋的<a href="http://blog.csdn.net/lmj623565791/article/details/78011599?utm_source=tuicool&utm_medium=referral" target="_blank" rel="noopener">ConstraintLayout 完全解析 快来优化你的布局吧</a>。</p>
+<a id="more"></a>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>首先呢打开你的 Android Studio，新建一个项目，然后会自动给你添加好 ConstraintLayout 依赖的，你看你的 <strong>app/build.gradle</strong> 文件是不是有这个</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    ...</span><br><span class="line">    implementation <span class="string">'com.android.support.constraint:constraint-layout:1.0.2'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而且你会发现，神奇的 AS 帮你自动创建一个 <strong>activity_main.xml</strong> 文件，并且默认布局就是 ConstraintLayout。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.constraint.ConstraintLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">"com.wzh.demo.constraintlayoutdemo.MainActivity"</span>&gt;</span></span><br><span class="line">   ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.constraint.ConstraintLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>很厉害吧，但我其实不喜欢，因为有时候我想用其他布局，每次还得改下，好累的说。</p>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><p>ConstraintLayout 和传统编写界面的方式恰恰相反，ConstraintLayout 非常适合使用可视化的方式来编写界面，但并不太适合使用XML的方式来进行编写。所以，切换到 Design 视图开始拖控件吧。<br>我们从 Palette 中拖一个 Button 进去，<br><img src="http://img.blog.csdn.net/20170131141130166" alt=""><br>由于此时我们还没有给 Button 添加任何的约束，因此 Button 的位置并不确定。所以现在我们在预览界面上看到的Button位置并不是它最终运行后的实际位置，如果一个控件没有添加任何约束的话，它在运行之后会自动位于界面的左上角。<br>接下来开始添加约束，每个控件的约束分为水平和垂直两类，一共可以四个方向上给控件添加约束，如图所示。<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/%E7%BA%A6%E6%9D%9F%E7%82%B9.png" alt="控件约束"><br>比如说，想让Button位于布局的右下角，就可以这样添加约束，如下图所示。<br><img src="http://img.blog.csdn.net/20170131145556811" alt="让Button位于布局的右下角"><br>至于其他位置，自己拖拖看了。<br>另外，我们还可以使用约束让一个控件相对于另一个控件进行定位。例如，我们希望再添加一个Button，让它位于第一个Button的正下方，并且间距64dp，那么操作如下所示。<br><img src="http://img.blog.csdn.net/20170131151357987" alt="使用约束让一个控件相对于另一个控件进行定位"><br>好了，会添加约束，但是该怎么删除约束呢。有3种方法。</p>
+<ul>
+<li>第一种用于删除一个单独的约束，选中一个控件然后将鼠标悬浮在某个约束的圆圈上，然后该圆圈会变成红色，这个时候单击一下就能删除了，如下图所示。<br><img src="http://img.blog.csdn.net/20170131152026400" alt="1"></li>
+<li>第二种用于删除某一个控件的所有约束，选中一个控件，然后它的左下角会出现一个删除约束的图标，点击该图标就能删除当前控件的所有约束了，如下所示。<br><img src="http://img.blog.csdn.net/20170131152353011" alt="2"></li>
+<li>第三种用于删除当前界面中的所有约束，点击工具栏中的删除约束图标即可，如下图所示。<br><img src="http://img.blog.csdn.net/20170131152641075" alt="3"></li>
+</ul>
+<h2 id="Inspector"><a href="#Inspector" class="headerlink" title="Inspector"></a>Inspector</h2><p>当你选中任意一个控件的时候，在右侧的Properties区域就会出现很多的属性选项，如下图所示。<br><img src="http://img.blog.csdn.net/20170131154335224" alt=""><br>在这里我们就可以设置当前控件的所有属性。<br>需要我们重点掌握的是Properties区域的上半部分，这部分也被称为Inspector。<br><img src="http://img.blog.csdn.net/20170131154433162" alt=""><br>首先可以看到，在Inspector中有一个纵向的轴和一个横向的轴，这两个轴是用于确定控件的位置的。我们刚才给Button的上下左右各添加了一个约束，然后Button就能居中显示了，其实就是因为这里纵横轴的值都是50。如果调整了纵横轴的比例，那么Button的位置也会随之改变，如下图所示。<br><img src="http://img.blog.csdn.net/20170131155247710" alt=""><br>不过，虽然我们将横轴的值拖动到了100，但是Button并没有紧贴到布局的最右侧，这是为什么呢？实际上，Android Studio给控件的每个方向上的约束都默认添加了一个8dp的间距，从Inspector上面也可以明显地看出来这些间距的值。如果这些默认值并不是你想要的，可以直接在Inspector上进行修改。<br>位于Inspector最中间的那个正方形区域，是用来控制控件大小的。一共有三种模式，每种模式都使用了一种不同的符号表示，点击符号即可进行切换。</p>
+<ul>
+<li><img src="http://img.blog.csdn.net/20170131170403918" alt=""> 表示wrap content。</li>
+<li><img src="http://img.blog.csdn.net/20170131173104320" alt=""> 表示固定值，也就是给控件指定了一个固定的长度或者宽度值。</li>
+<li><img src="http://img.blog.csdn.net/20170131173220664" alt=""> 表示 any size，它有点类似于 match parent，但和 match parent 并不一样，是属于 ConstraintLayout 中特有的一种大小控制方式，下面我们来重点讲解一下。<br>需要说明的是，在 ConstraintLayout 中是有 match parent 的，只不过用的比较少，因为 ConstraintLayout 的一大特点就是为了解决布局嵌套，既然没有了布局嵌套，那么 match parent 也就没有多大意义了。<br>而 any size 就是用于在 ConstraintLayout 中顶替 match parent 的，先看一下我们怎样使用 any size 实现和 match parent 同样的效果吧。比如说我想让 Button 的宽度充满整个布局，操作如下图所示。<br><img src="http://img.blog.csdn.net/20170131175114687" alt=""><br>可以看到，我们将 Button 的宽度指定成 any size，它就会自动充满整个布局了。<br>不禁会问这和 match parent 有什么区别呢？其实最大的区别在于，match parent 是用于填充满当前控件的父布局，而 any size 是用于填充满当前控件的约束规则。举个例子，如果我们有一个新的 Button，它的其中一个约束是添加到当前这个 Button 上的，那么 any size 的效果也会发生改变，如下图所示。<br><img src="http://img.blog.csdn.net/20170131175917401" alt=""></li>
+</ul>
+<h2 id="Guidelines"><a href="#Guidelines" class="headerlink" title="Guidelines"></a>Guidelines</h2><p>我们已经实现了让一个按钮居中对齐的功能，如果我们想让两个按钮共同居中对齐该怎么实现呢？<br>这需要用到ConstraintLayout中的一个新的功能，Guidelines。<br>直接看图吧。<br><img src="http://img.blog.csdn.net/20170131181741223?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3VvbGluX2Jsb2c=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br><img src="http://img.blog.csdn.net/20170131182552500" alt=""><br><img src="http://img.blog.csdn.net/20170131184106836" alt=""><br>解释下这波操作，我们希望让这两个按钮在水平方向上居中显示，在垂直方向上都距离底部64dp，那么就需要先添加一个垂直方向上的 Guideline。首先点击通知栏中的 Guidelines 图标可以添加一个垂直或水平方向上的 Guideline ，这里我们需要的是垂直方向上的。而 Guideline 默认是使用的 dp 尺，我们需要选中 Guideline，并点击一下最上面的箭头图标将它改成百分比尺，然后将垂直方向上的 Guideline 调整到50%的位置，这样就将准备工作做好了。接下来我们开始实现让两个按钮在水平方向上居中显示，并距离底部 64dp 的功能。然后给注册按钮的左边向Guideline添加约束，注册按钮的下面向登录按钮的下面添加约束。这样就实现了让两个按钮在水平方向上居中显示，在垂直方向上都距离底部64dp的功能了。</p>
+<h2 id="自动添加约束"><a href="#自动添加约束" class="headerlink" title="自动添加约束"></a>自动添加约束</h2><p>自动添加约束的方式主要有两种，一种叫 Autoconnect，一种叫 Inference。</p>
+<ul>
+<li>Autoconnect<br>  要使用 Autoconnect，首先需要在工具栏中将这个功能启用，默认情况下 Autoconnect 是不启用的，如下图所示。<br>  <img src="http://img.blog.csdn.net/20170131203249059" alt=""><br>  Autoconnect 可以根据我们拖放控件的状态自动判断应该如何添加约束，比如我们将 Button 放到界面的正中央，那么它的上下左右都会自动地添加上约束，如下图所示。<br>  <img src="http://img.blog.csdn.net/20170131203642649" alt=""><br>  然后我们在这个 Button 的下方再放置一个 Button，效果如下。<br>  <img src="http://img.blog.csdn.net/20170131204407519" alt=""><br>  不过 Autoconnect 是无法保证百分百准确判断出我们的意图的，如果自动添加的约束并不是你想要的话，还可以在任何时候进行手动修改。</li>
+<li>Inference<br>  Inference 也是用于自动添加约束的，但它比 Autoconnect 的功能要更为强大，因为 AutoConnect 只能给当前操作的控件自动添加约束，而 Inference 会给当前界面中的所有元素自动添加约束。因而 Inference 比较适合用来实现复杂度比较高的界面，它可以一键自动生成所有的约束。也是用于自动添加约束的，但它比 Autoconnect 的功能要更为强大，因为 AutoConnect 只能给当前操作的控件自动添加约束，而 Inference 会给当前界面中的所有元素自动添加约束。因而 Inference 比较适合用来实现复杂度比较高的界面，它可以一键自动生成所有的约束。<br>  是时候秀一波操作了。<br>  <img src="http://img.blog.csdn.net/20170131223507742" alt=""></li>
+</ul>
+<hr>
+<p>本文根据郭霖的这篇<a href="http://blog.csdn.net/guolin_blog/article/details/53122387" target="_blank" rel="noopener">Android 新特性介绍，ConstraintLayout 完全解析</a>进行整理的。图片均来自此篇文章。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/04/%E7%90%86%E8%A7%A3MeasureSpec/" rel="next" title="理解MeasureSpec">
+                <i class="fa fa-chevron-left"></i> 理解MeasureSpec
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/18/ConstraintLayout%20%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7/" rel="prev" title="ConstraintLayout 相关属性">
+                ConstraintLayout 相关属性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="W.Z.H" />
+          <p class="site-author-name" itemprop="name">W.Z.H</p>
+           
+              <p class="site-description motion-element" itemprop="description">WZH's Blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wuzhaohui026" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="wuzhaohui1993@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-email"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hukai.me/" title="胡凯" target="_blank">胡凯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://m.kuaidi100.com/" title="快递查询" target="_blank">快递查询</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inspector"><span class="nav-number">3.</span> <span class="nav-text">Inspector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guidelines"><span class="nav-number">4.</span> <span class="nav-text">Guidelines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动添加约束"><span class="nav-number">5.</span> <span class="nav-text">自动添加约束</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">W.Z.H</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="本文主要介绍如何在 Android App 里集成支付宝和微信支付的功能。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么在你的App里集成支付功能">
+<meta property="og:url" content="http:&#x2F;&#x2F;wuzhaohui026.github.io&#x2F;2018&#x2F;04&#x2F;20&#x2F;%E6%80%8E%E4%B9%88%E5%9C%A8%E4%BD%A0%E7%9A%84App%E9%87%8C%E9%9B%86%E6%88%90%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD&#x2F;index.html">
+<meta property="og:site_name" content="Hui 朝晖的 Blog">
+<meta property="og:description" content="本文主要介绍如何在 Android App 里集成支付宝和微信支付的功能。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180420224423.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;gw.alipayobjects.com&#x2F;zos&#x2F;skylark&#x2F;public&#x2F;files&#x2F;909cb3a6c0febb5ef77be00e8cbfcdfe.png">
+<meta property="og:updated_time" content="2018-05-01T16:31:34.870Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180420224423.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wuzhaohui026.github.io/2018/04/20/怎么在你的App里集成支付功能/"/>
+
+
+
+
+
+  <title>怎么在你的App里集成支付功能 | Hui 朝晖的 Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hui 朝晖的 Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Android | Java</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuzhaohui026.github.io/2018/04/20/%E6%80%8E%E4%B9%88%E5%9C%A8%E4%BD%A0%E7%9A%84App%E9%87%8C%E9%9B%86%E6%88%90%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="W.Z.H">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui 朝晖的 Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">怎么在你的App里集成支付功能</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-20T22:41:11+08:00">
+                2018-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文主要介绍如何在 Android App 里集成支付宝和微信支付的功能。</p>
+<a id="more"></a>
+<h2 id="集成支付宝支付"><a href="#集成支付宝支付" class="headerlink" title="集成支付宝支付"></a>集成支付宝支付</h2><p>没想到现在 App 里集成支付宝是这么的简单，我还折腾了好久…<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180420224423.jpg" alt=""></p>
+<p>好了，开始，假设你已经完成了支付宝那些繁杂的申请啥的工作，进入开发了。<br>首先，去下载官方的 DEMO ：<br><a href="https://gw.alipayobjects.com/os/rmsportal/pJHcoarsogqUiSbkNIIg.zip" target="_blank" rel="noopener">App支付客户端DEMO&amp;SDK</a>。</p>
+<h2 id="导入开发资源"><a href="#导入开发资源" class="headerlink" title="导入开发资源"></a>导入开发资源</h2><p>解压后把里面的 jar 包拿出来放到你工程的 lib 目录下，如图<br><img src="https://gw.alipayobjects.com/zos/skylark/public/files/909cb3a6c0febb5ef77be00e8cbfcdfe.png" alt=""><br>然后进入工程的“Project Structure”，在app module下选择“File dependency”，将libs目录下的alipaySDK-xxxxxxxx.jar导入，或者在app module下的build.gradle下手动添加依赖，如下代码所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">compile files('libs/alipaySdk-20170725.jar')</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-AndroidManifest-文件"><a href="#修改-AndroidManifest-文件" class="headerlink" title="修改 AndroidManifest 文件"></a>修改 AndroidManifest 文件</h2><p>复制进去就行</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"com.alipay.sdk.app.H5PayActivity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:configChanges</span>=<span class="string">"orientation|keyboardHidden|navigation|screenSize"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"behind"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:windowSoftInputMode</span>=<span class="string">"adjustResize|stateHidden"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"com.alipay.sdk.app.H5AuthActivity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:configChanges</span>=<span class="string">"orientation|keyboardHidden|navigation"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"behind"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:windowSoftInputMode</span>=<span class="string">"adjustResize|stateHidden"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>声明权限</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_WIFI_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_PHONE_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>好了，准备工作基本完成。</p>
+<h2 id="支付接口的调用"><a href="#支付接口的调用" class="headerlink" title="支付接口的调用"></a>支付接口的调用</h2><p>这里参考下给的 Demo。<br>由于支付包的 Demo 给的是本地加密的方式，并且不推荐使用这种方法，所以我们只需要用的其中的部分代码就好了。<br>首先，把 <strong>PayResult.java</strong>这个类复制到你的项目里。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PayResult</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String resultStatus;</span><br><span class="line">    <span class="keyword">private</span> String result;</span><br><span class="line">    <span class="keyword">private</span> String memo;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PayResult</span><span class="params">(Map&lt;String, String&gt; rawResult)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (rawResult == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (String key : rawResult.keySet()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (TextUtils.equals(key, <span class="string">"resultStatus"</span>)) &#123;</span><br><span class="line">                resultStatus = rawResult.get(key);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (TextUtils.equals(key, <span class="string">"result"</span>)) &#123;</span><br><span class="line">                result = rawResult.get(key);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (TextUtils.equals(key, <span class="string">"memo"</span>)) &#123;</span><br><span class="line">                memo = rawResult.get(key);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"resultStatus=&#123;"</span> + resultStatus + <span class="string">"&#125;;memo=&#123;"</span> + memo</span><br><span class="line">                + <span class="string">"&#125;;result=&#123;"</span> + result + <span class="string">"&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the resultStatus</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResultStatus</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> resultStatus;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the memo</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMemo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> memo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the result</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后调支付接口。PayTask对象主要为商户提供订单支付、查询功能，及获取当前开发包版本号。获取PayTask支付对象调用支付（支付行为需要在独立的非ui线程中执行），</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SDK_PAY_FLAG = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 订单信息</span></span><br><span class="line"><span class="keyword">final</span> String orderInfo = info;   </span><br><span class="line">Runnable payRunnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        PayTask alipay = <span class="keyword">new</span> PayTask(PayDemoActivity.<span class="keyword">this</span>);</span><br><span class="line">        Map&lt;String, String&gt; result = alipay.payV2(orderInfo, <span class="keyword">true</span>);</span><br><span class="line">        Message msg = <span class="keyword">new</span> Message();</span><br><span class="line">        msg.what = SDK_PAY_FLAG;</span><br><span class="line">        msg.obj = result;</span><br><span class="line">        mHandler.sendMessage(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Thread payThread = <span class="keyword">new</span> Thread(payRunnable);</span><br><span class="line">payThread.start();</span><br></pre></td></tr></table></figure>
+<p>注意下 <strong>orderInfo</strong>这个变量，这个值是由通过向后台请求返回的值。<br>这里需要后台注意的是，写的时候看好<a href="https://docs.open.alipay.com/204/105465/" target="_blank" rel="noopener">App支付请求参数说明</a>这个文档。<br>然后是支付结果的获取与处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressLint</span>(<span class="string">"HandlerLeak"</span>)</span><br><span class="line">    <span class="keyword">private</span> Handler mHandler = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unused"</span>)</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">            <span class="keyword">case</span> SDK_PAY_FLAG: &#123;</span><br><span class="line">                <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">                PayResult payResult = <span class="keyword">new</span> PayResult((Map&lt;String, String&gt;) msg.obj);</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                String resultInfo = payResult.getResult();<span class="comment">// 同步返回需要验证的信息</span></span><br><span class="line">                String resultStatus = payResult.getResultStatus();</span><br><span class="line">                <span class="comment">// 判断resultStatus 为9000则代表支付成功</span></span><br><span class="line">                <span class="keyword">if</span> (TextUtils.equals(resultStatus, <span class="string">"9000"</span>)) &#123;</span><br><span class="line">                    <span class="comment">// 该笔订单是否真实支付成功，需要依赖服务端的异步通知。</span></span><br><span class="line">                    Toast.makeText(PayDemoActivity.<span class="keyword">this</span>, <span class="string">"支付成功"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 该笔订单真实的支付结果，需要依赖服务端的异步通知。</span></span><br><span class="line">                    Toast.makeText(PayDemoActivity.<span class="keyword">this</span>, <span class="string">"支付失败"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<p>然后就好了。<br>结束。</p>
+<h2 id="集成微信支付"><a href="#集成微信支付" class="headerlink" title="集成微信支付"></a>集成微信支付</h2><p>微信支付还是好弄的，就是先该注册的注册，该申请的申请，这个不是本文的重点。<br>因为微信有个支付回调的问题，我的做法就是在项目的x.x.x.wxapi包路径中实现 WXPayEntryActivity 类(切记包名或类名一定要一致，否则会造成无法回调)。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WXPayEntryActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">IWXAPIEventHandler</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"WXPayEntryActivity"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> IWXAPI api;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.pay_result);</span><br><span class="line">        </span><br><span class="line">        api = WXAPIFactory.createWXAPI(<span class="keyword">this</span>, Constants.APP_ID);</span><br><span class="line">        api.handleIntent(getIntent(), <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 在这里去做跟后台服务器的请求，</span></span><br><span class="line"><span class="comment">        * 获取需要的签名信息，然后调起微信支付。</span></span><br><span class="line"><span class="comment">        **/</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onNewIntent</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onNewIntent(intent);</span><br><span class="line">        setIntent(intent);</span><br><span class="line">        api.handleIntent(intent, <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReq</span><span class="params">(BaseReq req)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResp</span><span class="params">(BaseResp resp)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onPayFinish, errCode = "</span> + resp.errCode);</span><br><span class="line">        <span class="keyword">switch</span>(resp.errCode)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="comment">//支付成功，做自己想做的处理</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> -<span class="number">1</span>:</span><br><span class="line">            <span class="comment">//可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> -<span class="number">2</span>：</span><br><span class="line">            <span class="comment">//用户取消.无需处理。发生场景：用户不支付了，点击取消，返回APP。</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><h2 id="这是第一次接入支付宝支付，一开始还很起劲的参照一个库去进行封装，然后发现好像多此一举，并且还不成功，和后台捯饬了好久然后看Demo才弄出来。"><a href="#这是第一次接入支付宝支付，一开始还很起劲的参照一个库去进行封装，然后发现好像多此一举，并且还不成功，和后台捯饬了好久然后看Demo才弄出来。" class="headerlink" title="这是第一次接入支付宝支付，一开始还很起劲的参照一个库去进行封装，然后发现好像多此一举，并且还不成功，和后台捯饬了好久然后看Demo才弄出来。"></a>这是第一次接入支付宝支付，一开始还很起劲的参照一个库去进行封装，然后发现好像多此一举，并且还不成功，和后台捯饬了好久然后看Demo才弄出来。</h2><p>参考：<br><a href="https://docs.open.alipay.com/204/105296/" target="_blank" rel="noopener">支付宝支付文档</a><br><a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_5" target="_blank" rel="noopener">微信支付APP端开发步骤</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/18/ConstraintLayout%20%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7/" rel="next" title="ConstraintLayout 相关属性">
+                <i class="fa fa-chevron-left"></i> ConstraintLayout 相关属性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/01/Android%20Lottie-%E5%8A%A8%E7%94%BB%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="prev" title="Android Lottie 动画的简单使用">
+                Android Lottie 动画的简单使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="W.Z.H" />
+          <p class="site-author-name" itemprop="name">W.Z.H</p>
+           
+              <p class="site-description motion-element" itemprop="description">WZH's Blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wuzhaohui026" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="wuzhaohui1993@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-email"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hukai.me/" title="胡凯" target="_blank">胡凯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://m.kuaidi100.com/" title="快递查询" target="_blank">快递查询</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集成支付宝支付"><span class="nav-number">1.</span> <span class="nav-text">集成支付宝支付</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入开发资源"><span class="nav-number">2.</span> <span class="nav-text">导入开发资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-AndroidManifest-文件"><span class="nav-number">3.</span> <span class="nav-text">修改 AndroidManifest 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支付接口的调用"><span class="nav-number">4.</span> <span class="nav-text">支付接口的调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成微信支付"><span class="nav-number">5.</span> <span class="nav-text">集成微信支付</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这是第一次接入支付宝支付，一开始还很起劲的参照一个库去进行封装，然后发现好像多此一举，并且还不成功，和后台捯饬了好久然后看Demo才弄出来。"><span class="nav-number">7.</span> <span class="nav-text">这是第一次接入支付宝支付，一开始还很起劲的参照一个库去进行封装，然后发现好像多此一举，并且还不成功，和后台捯饬了好久然后看Demo才弄出来。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">W.Z.H</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

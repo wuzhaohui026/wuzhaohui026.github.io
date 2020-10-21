@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="RecyclerView是android-support-v7-21中新增的一个Widgets，是ListView的升级版，更加先进和灵活。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecyclerView+CardView实践">
+<meta property="og:url" content="http:&#x2F;&#x2F;wuzhaohui026.github.io&#x2F;2016&#x2F;02&#x2F;16&#x2F;RecyclerView-CardView%E5%AE%9E%E8%B7%B5&#x2F;index.html">
+<meta property="og:site_name" content="Hui 朝晖的 Blog">
+<meta property="og:description" content="RecyclerView是android-support-v7-21中新增的一个Widgets，是ListView的升级版，更加先进和灵活。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;recyclerView.png">
+<meta property="og:updated_time" content="2017-07-18T15:43:55.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;recyclerView.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wuzhaohui026.github.io/2016/02/16/RecyclerView-CardView实践/"/>
+
+
+
+
+
+  <title>RecyclerView+CardView实践 | Hui 朝晖的 Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hui 朝晖的 Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Android | Java</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuzhaohui026.github.io/2016/02/16/RecyclerView-CardView%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="W.Z.H">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui 朝晖的 Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RecyclerView+CardView实践</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-16T15:19:01+08:00">
+                2016-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>RecyclerView是android-support-v7-21中新增的一个Widgets，是ListView的升级版，更加先进和灵活。</p>
+<a id="more"></a>
+
+<p>使用RecylerVIew组件，需要指定一个Adapter和布局管理器，布局管理器定位item在RecyclerView中的位置，<br>Adapter负责重用子视图、回收视图，避免View的创建和findViewById()的使用，提高性能。<br>通常一个RccyclerView主要要处理以下几个部分：<br>    •      LayoutManager ：RccyclerView将item布局方式单独放出来供开发者选择，<br>        •    LinearLayoutManager 线性布局，纵向或者横向滚动的列表视图<br>        •    GirdLayoutManager 显示item为网格布局<br>        •    StaggeredGridLayoutManager 显示item为交错的网格布局<br>    •   Adapter：适配器，在listview中也有，主要用来提供数据适配<br>    •   ItemAnimator：负责item的动画播放修改,添加,删除或移动<br>    •   ItemDecoration：可以用来添加drawings或者改变item的布局，比如添加dividers<br>    •   ViewHolder：用户实现自己的viewlder即可<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/recyclerView.png" alt="RecyclerView"></p>
+<p>Cardview，跟RccyclerView一样也是suooport-v7新控件，可以让我们使用类似卡片的效果，<br>我们还可以设置卡片的圆角和阴影效果，cardview是一个layout继承自frameLayout，<br>因此需要在里面布局其他view控件，    </p>
+<p>CardView常用属性：</p>
+<ol>
+<li>card_view:cardElevation                 阴影的大小</li>
+<li>card_view:cardMaxElevation             阴影最大高度</li>
+<li>card_view:cardBackgroundColor             卡片的背景色</li>
+<li>card_view:cardCornerRadius             卡片的圆角大小</li>
+<li>card_view:contentPadding                 卡片内容于边距的间隔<br> 1.card_view:contentPaddingBottom<br> 2.card_view:contentPaddingTop<br> 3.card_view:contentPaddingLeft<br> 4.card_view:contentPaddingRight<br> 5.card_view:contentPaddingStart<br> 6.card_view:contentPaddingEnd</li>
+<li>card_view:cardUseCompatPadding         设置内边距，V21+的版本和之前的版本仍旧具有一样的计算方式</li>
+<li>card_view:cardPreventConrerOverlap     在V20和之前的版本中添加内边距，这个属性为了防止内容和边角的重叠</li>
+</ol>
+<p>这篇文章主要是围绕RecyclerView+CardView来实现一个新闻的页面来进行分析。</p>
+<p><strong>使用方法：</strong><br>首先在项目的build.gradle添加以下依赖：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.android.support:cardview-v7:23.1.1'</span></span><br><span class="line">compile <span class="string">'com.android.support:recyclerview-v7:23.1.1'</span></span><br></pre></td></tr></table></figure>
+<p>在MainActivity中实现以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> RecyclerView mRecyclerView;</span><br><span class="line">    <span class="keyword">private</span> List&lt;News&gt; newsList;</span><br><span class="line">    <span class="keyword">private</span> RecyclerViewAdapter mAdapter;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        LinearLayoutManager mLinearLayoutManager = <span class="keyword">new</span> LinearLayoutManager(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);</span><br><span class="line">        initPersonData();</span><br><span class="line">        <span class="comment">// 设置高性能模式，必须在确定内容大小不变的情况下设置</span></span><br><span class="line">        mRecyclerView.setHasFixedSize(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">// 设施线性布局</span></span><br><span class="line">        mRecyclerView.setLayoutManager(mLinearLayoutManager);</span><br><span class="line">        mAdapter = <span class="keyword">new</span> RecyclerViewAdapter(newsList,<span class="keyword">this</span>);</span><br><span class="line">        mRecyclerView.setAdapter(mAdapter);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initPersonData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        newsList =<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        newsList.add(<span class="keyword">new</span> News</span><br><span class="line">                (getString(R.string.news_one_title),</span><br><span class="line">                        getString(R.string.news_one_desc),</span><br><span class="line">                        R.mipmap.news_one));</span><br><span class="line">        newsList.add(<span class="keyword">new</span> News</span><br><span class="line">                (getString(R.string.news_two_title),</span><br><span class="line">                        getString(R.string.news_two_desc),</span><br><span class="line">                        R.mipmap.news_two));</span><br><span class="line">        newsList.add(<span class="keyword">new</span> News(</span><br><span class="line">                getString(R.string.news_three_title),</span><br><span class="line">                getString(R.string.news_three_desc),</span><br><span class="line">                R.mipmap.news_three));</span><br><span class="line">        newsList.add(<span class="keyword">new</span> News(</span><br><span class="line">                getString(R.string.news_four_title),</span><br><span class="line">                getString(R.string.news_four_desc),</span><br><span class="line">                R.mipmap.news_four));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在RecyclerViewAdapter中实现一下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RecyclerViewAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">NewsViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>  List&lt;News&gt; news;</span><br><span class="line">    <span class="keyword">private</span> Context context;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RecyclerViewAdapter</span><span class="params">(List&lt;News&gt; news, Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.news = news;</span><br><span class="line">        <span class="keyword">this</span>.context = context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> NewsViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        View v = LayoutInflater.from(context).inflate(R.layout.cardview, parent, <span class="keyword">false</span>);</span><br><span class="line">        NewsViewHolder nvh = <span class="keyword">new</span> NewsViewHolder(v);</span><br><span class="line">        <span class="keyword">return</span> nvh;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(NewsViewHolder holder, <span class="keyword">final</span> <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> j = position;</span><br><span class="line">        holder.imageView.setImageResource(news.get(position).getphotoId());</span><br><span class="line">        holder.news_title.setText(news.get(position).getTitle());</span><br><span class="line">        holder.news_content.setText(news.get(position).getcontent());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//cardView设置点击事件</span></span><br><span class="line">        holder.cardView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(context, NewsActivity<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">                intent.putExtra(<span class="string">"News"</span>, news.get(j));</span><br><span class="line">                context.startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        holder.img_love.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(context,<span class="string">"已赞"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        holder.img_pinglun.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(context,<span class="string">"已评论"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> news.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在NewsViewHolder实现以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> </span>&#123;</span><br><span class="line">    CardView cardView;</span><br><span class="line">    ImageView imageView;</span><br><span class="line">    ImageView img_love;</span><br><span class="line">    ImageView img_pinglun;</span><br><span class="line">    TextView news_title;</span><br><span class="line">    TextView news_content;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NewsViewHolder</span><span class="params">(<span class="keyword">final</span> View itemView)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(itemView);</span><br><span class="line">        cardView = (CardView) itemView.findViewById(R.id.cardview);</span><br><span class="line">        img_love = (ImageView) itemView.findViewById(R.id.love_img);</span><br><span class="line">        img_pinglun = (ImageView) itemView.findViewById(R.id.pinglun);</span><br><span class="line">        imageView = (ImageView) itemView.findViewById(R.id.image_view);</span><br><span class="line">        news_content = (TextView) itemView.findViewById(R.id.content);</span><br><span class="line">        news_title = (TextView) itemView.findViewById(R.id.title);</span><br><span class="line">        <span class="comment">//设置TextView背景为半透明</span></span><br><span class="line">        news_title.setBackgroundColor(Color.argb(<span class="number">20</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">        news_content.setBackgroundColor(Color.argb(<span class="number">20</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现News的数据封装：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">News</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> String content;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> photoId;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">News</span><span class="params">(String title, String content, <span class="keyword">int</span> photoId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.title = title;</span><br><span class="line">        <span class="keyword">this</span>.content = content;</span><br><span class="line">        <span class="keyword">this</span>.photoId = photoId;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTitle</span><span class="params">(String title)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.title = title;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setphotoId</span><span class="params">(<span class="keyword">int</span> photoId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.photoId = photoId;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setcontent</span><span class="params">(String content)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.content = content;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTitle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> title;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getcontent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getphotoId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> photoId;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，我们展示下布局文件：<br>在activity_main.xml文件中添加RecyclerView：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_marginTop</span>=<span class="string">"5dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/recyclerView"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@id/toolbar"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v7.widget.RecyclerView</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在cardview.xml文件中添加CardView：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.CardView</span> <span class="attr">xmlns:card_view</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/cardview"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_gravity</span>=<span class="string">"center_vertical"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_marginTop</span>=<span class="string">"5dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">card_view:cardBackgroundColor</span>=<span class="string">"#72d4f9"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">card_view:cardCornerRadius</span>=<span class="string">"5dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">card_view:cardElevation</span>=<span class="string">"5dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:clickable</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:foreground</span>=<span class="string">"?android:attr/selectableItemBackground"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">card_view:cardPreventCornerOverlap</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">card_view:cardUseCompatPadding</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">card_view:contentPadding</span>=<span class="string">"5dp"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v7.widget.CardView</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>参考链接：<br><a href="http://www.androidchina.net/4183.html" target="_blank" rel="noopener">RecyclerView与CardView的使用</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/04/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" rel="next" title="线程的基本用法">
+                <i class="fa fa-chevron-left"></i> 线程的基本用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/02/startActivityForResult%E5%92%8CsetResult%E8%AF%A6%E8%A7%A3/" rel="prev" title="startActivityForResult和setResult的几点解释">
+                startActivityForResult和setResult的几点解释 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="W.Z.H" />
+          <p class="site-author-name" itemprop="name">W.Z.H</p>
+           
+              <p class="site-description motion-element" itemprop="description">WZH's Blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wuzhaohui026" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="wuzhaohui1993@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-email"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hukai.me/" title="胡凯" target="_blank">胡凯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://m.kuaidi100.com/" title="快递查询" target="_blank">快递查询</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">W.Z.H</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

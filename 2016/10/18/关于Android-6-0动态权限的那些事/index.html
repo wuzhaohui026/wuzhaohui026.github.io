@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="最近项目快要结尾的时候，发现了项目在6.0+的设备上运行出现了问题，查看Log发现是权限的问题。这个问题很早就知道，但是自己是5.0的手机，在实际开发的时候忽略了这个，所以这俩天就查了下解决方法。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Android 6.0动态权限的那些事">
+<meta property="og:url" content="http:&#x2F;&#x2F;wuzhaohui026.github.io&#x2F;2016&#x2F;10&#x2F;18&#x2F;%E5%85%B3%E4%BA%8EAndroid-6-0%E5%8A%A8%E6%80%81%E6%9D%83%E9%99%90%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B&#x2F;index.html">
+<meta property="og:site_name" content="Hui 朝晖的 Blog">
+<meta property="og:description" content="最近项目快要结尾的时候，发现了项目在6.0+的设备上运行出现了问题，查看Log发现是权限的问题。这个问题很早就知道，但是自己是5.0的手机，在实际开发的时候忽略了这个，所以这俩天就查了下解决方法。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;Permissiom.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;ss.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;4.png">
+<meta property="og:updated_time" content="2016-10-20T14:13:48.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;Permissiom.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wuzhaohui026.github.io/2016/10/18/关于Android-6-0动态权限的那些事/"/>
+
+
+
+
+
+  <title>关于Android 6.0动态权限的那些事 | Hui 朝晖的 Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hui 朝晖的 Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Android | Java</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuzhaohui026.github.io/2016/10/18/%E5%85%B3%E4%BA%8EAndroid-6-0%E5%8A%A8%E6%80%81%E6%9D%83%E9%99%90%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="W.Z.H">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui 朝晖的 Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关于Android 6.0动态权限的那些事</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-18T22:00:10+08:00">
+                2016-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近项目快要结尾的时候，发现了项目在6.0+的设备上运行出现了问题，查看Log发现是权限的问题。这个问题很早就知道，但是自己是5.0的手机，在实际开发的时候忽略了这个，所以这俩天就查了下解决方法。</p>
+<a id="more"></a>
+
+<h2 id="随便说点"><a href="#随便说点" class="headerlink" title="随便说点"></a>随便说点</h2><p>Android 6.0发布都有一年多了，其新引入的（Requesting Permissions at Run Time）运行时权限受众多开发者的关注，随着今年国内手机厂商对6.0系统的普及，觉得Android开发者有必要去了解下了。<br>在SDK23以前，我们开发的时候要是想要申请权限，直接在AndroidManifest中配置一下就好了，但到了在SDK23+开发的话，我们要是还是这样，当涉及到一些危险权限(Dangerous Permissions)时，程序就又可能会出现崩溃了，这时候需要我们在操作发生之前让用户进行权限授予才能进行下一步的操作。</p>
+<blockquote>
+<p>如果你的app TargetSDK设置在了23以下那么在6.0+系统中运行是不会崩溃的，当然你也可以TargetSDK一直设置在23以下，这样的话你就不需要考虑动态授权的问题了。</p>
+</blockquote>
+<p>下面这张图来自官方文档，给我们展示了哪些权限需要在运行是进行授权。<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/Permissiom.png" alt="Dangerous permissions"></p>
+<p>这张图中提及的权限不仅需要在AndroidManifest中进行配置，在SDK23以上开发的时候还需要在运行时让用户进行授权。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ul>
+<li>将targetSdkVersion设置为&gt;= 23，这样的话，在项目的开发种涉及到权限问题时则必须按照Android官方的要求，动态的申请权限。</li>
+</ul>
+<blockquote>
+<p>当然，如果你不想这么做的话，就将将targetSdkVersion设置为设置为<strong>22或22以下</strong>就好了</p>
+</blockquote>
+<ul>
+<li>在AndroidManifest.xml中申请你需要的权限，包括普通权限和需要申请的特殊权限。</li>
+<li>接下来就是来申请权限了<ul>
+<li>1.检查是否由此权限：checkSelfPermission()，如果已经开启，则直接进行需要的操作。</li>
+<li>2.如果没有开启，则要判断是否需要向用户解释为何申请权限的原因：shouldShowRequestPermissionRationale。</li>
+<li>3.如果需要（返回true），则弹出对话框提示用户申请权限原因，用户确认后申请权限：requestPermissions()，如果不需要（即返回false），则直接申请权限：requestPermissions()。</li>
+</ul>
+</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>这里来演示下模拟调用系统相机时需要申请的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    private Button button;</span><br><span class="line">    private TextView textView;</span><br><span class="line"></span><br><span class="line">    private final int CAMERA_REQUESTCODE = 0X11;//与回调有关</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        initView();</span><br><span class="line">        intEvent();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private void initView() &#123;</span><br><span class="line">        button = (Button) findViewById(R.id.button);</span><br><span class="line">        textView = (TextView) findViewById(R.id.textView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void intEvent() &#123;</span><br><span class="line">        button.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                takePhoto();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void takePhoto() &#123;</span><br><span class="line">        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)</span><br><span class="line">                != PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">            /**</span><br><span class="line">             * 第一次请求权限时，用户如果拒绝，下一次请求调用shouldShowRequestPermissionRationale()方法返回true</span><br><span class="line">             * 向用户解释为什么需要这个权限</span><br><span class="line">             */</span><br><span class="line">            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) &#123;</span><br><span class="line">                new AlertDialog.Builder(this)</span><br><span class="line">                        .setMessage(&quot;申请相机权限&quot;)</span><br><span class="line">                        .setPositiveButton(&quot;确定&quot;, new DialogInterface.OnClickListener() &#123;</span><br><span class="line">                            @Override</span><br><span class="line">                            public void onClick(DialogInterface dialog, int which) &#123;</span><br><span class="line">                                //申请相机权限</span><br><span class="line">                                ActivityCompat.requestPermissions(MainActivity.this,</span><br><span class="line">                                        new String[]&#123;Manifest.permission.CAMERA&#125;, CAMERA_REQUESTCODE);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;).show();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                //申请相机权限</span><br><span class="line">                ActivityCompat.requestPermissions(this,</span><br><span class="line">                        new String[]&#123;Manifest.permission.CAMERA&#125;,</span><br><span class="line">                        CAMERA_REQUESTCODE);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) &#123;</span><br><span class="line">        super.onRequestPermissionsResult(requestCode, permissions, grantResults);</span><br><span class="line">        if (requestCode == CAMERA_REQUESTCODE) &#123;</span><br><span class="line">            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">                textView.setText(&quot;相机权限已经申请&quot;);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                /**</span><br><span class="line">                 * 用户勾选了不在询问</span><br><span class="line">                 * 提示用户手动打开权限</span><br><span class="line">                 */</span><br><span class="line">                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) &#123;</span><br><span class="line">                    Toast.makeText(this, &quot;相机权限已经禁止&quot;, Toast.LENGTH_LONG).show();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，别忘了在AndroidManifest中配置相机权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.CAMERA&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/ss.png" alt="开始申请"><br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/2.png" alt="上次拒绝了"><br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/3.png" alt="是否同意"><br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/4.png" alt="申请成功"></p>
+<h2 id="相关API介绍"><a href="#相关API介绍" class="headerlink" title="相关API介绍"></a>相关API介绍</h2><ul>
+<li>REQUESTCODE　：用来进行回调处理，因为申请权限是有回调结果的。</li>
+<li>ContextCompat.checkSelfPermission ：主要用于检测某个权限是否已经被授予，方法参数为（context,需要检测的权限），方法返回值为PackageManager.PERMISSION_DENIED或者PackageManager.PERMISSION_GRANTED，当返回PackageManager.PERMISSION_DENIED时需要调用API进行权限申请。</li>
+<li>ActivityCompat.requestPermissions ：用于权限的申请，方法参数为（context,需要申请的权限数组,自定义的请求码），系统会弹出一个申请权限的对话框。</li>
+<li>shouldShowRequestPermissionRationale ：Android原生系统中，如果第二次弹出权限申请的对话框，会出现“以后不再弹出”的提示框，如果用户勾选了，你再申请权限，则shouldShowRequestPermissionRationale返回true，意思是说要给用户一个 解释，告诉用户为什么要这个权限。但是在实际开发中我们需要注意国内一些厂商定制的系统，比如在申请权限时，如果用户选择了拒绝，则不会再弹出对话框，所以我就在回调里面进行处理，如果用户拒绝了这个权限，则打开本应用信息界面，由用户自己手动开启这个权限。</li>
+</ul>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><p>在我的实际项目中涉及到了在Fragment中申请权限，这时候需要注意：</p>
+<ul>
+<li>在Fragment中申请权限，不要使用ActivityCompat.requestPermissions, 直接使用Fragment的requestPermissions方法，否则会回调到Activity的 onRequestPermissionsResult</li>
+<li>如果在Fragment中嵌套Fragment，则在子Fragment中使用requestPermissions方 法，这样onRequestPermissionsResult不会回调回来，建议使用 getParentFragment().requestPermissions方法，<br>这个方法会回调到父Fragment中的onRequestPermissionsResult，加入以下代码可以把回调透传到子Fragment<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) &#123;</span><br><span class="line">    super.onRequestPermissionsResult(requestCode, permissions, grantResults);</span><br><span class="line">    List&lt;Fragment&gt; fragments = getChildFragmentManager().getFragments();</span><br><span class="line">    if (fragments != null) &#123;</span><br><span class="line">        for (Fragment fragment : fragments) &#123;</span><br><span class="line">            if (fragment != null) &#123;</span><br><span class="line">                fragment.onRequestPermissionsResult(requestCode,permissions,grantResults);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="相关开源项目"><a href="#相关开源项目" class="headerlink" title="相关开源项目"></a>相关开源项目</h2><ul>
+<li><a href="https://github.com/hotchemi/PermissionsDispatcher" target="_blank" rel="noopener">PermissionsDispatcher</a><br>使用标注的方式，动态生成类处理运行时权限.</li>
+<li><a href="https://github.com/tbruyelle/RxPermissions" target="_blank" rel="noopener">RxPermissions</a><br>基于RxJava的运行时权限检测框架</li>
+<li><a href="https://github.com/anthonycr/Grant" target="_blank" rel="noopener">Grant</a><br>简化运行时权限的处理，比较灵活</li>
+<li><a href="https://github.com/googlesamples/android-RuntimePermissions" target="_blank" rel="noopener">android-RuntimePermissions</a><br>Google官方的例子</li>
+</ul>
+<h2 id="文章推荐"><a href="#文章推荐" class="headerlink" title="文章推荐"></a>文章推荐</h2><p><a href="http://blog.csdn.net/lmj623565791/article/details/50709663" target="_blank" rel="noopener">Android 6.0 运行时权限处理完全解析</a></p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>代码参考：<a href="http://blog.csdn.net/kong_gu_you_lan/article/details/52488097" target="_blank" rel="noopener">Android 6.0运行时权限详解</a><br>内容参考：</p>
+<ul>
+<li><a href="http://blog.csdn.net/leejizhou/article/details/51511630" target="_blank" rel="noopener">Android 6.0+ 运行时权限探索</a></li>
+<li><a href="http://www.jianshu.com/p/a51593817825#" target="_blank" rel="noopener">Android6.0动态权限申请步骤以及需要注意的一些坑</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/23/Service%E5%B0%8F%E8%AE%B0/" rel="next" title="Service小记">
+                <i class="fa fa-chevron-left"></i> Service小记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/31/2016%E5%B0%8F%E7%BB%93/" rel="prev" title="2016小结">
+                2016小结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="W.Z.H" />
+          <p class="site-author-name" itemprop="name">W.Z.H</p>
+           
+              <p class="site-description motion-element" itemprop="description">WZH's Blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wuzhaohui026" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="wuzhaohui1993@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-email"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hukai.me/" title="胡凯" target="_blank">胡凯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://m.kuaidi100.com/" title="快递查询" target="_blank">快递查询</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随便说点"><span class="nav-number">1.</span> <span class="nav-text">随便说点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关API介绍"><span class="nav-number">4.</span> <span class="nav-text">相关API介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备注"><span class="nav-number">5.</span> <span class="nav-text">备注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关开源项目"><span class="nav-number">6.</span> <span class="nav-text">相关开源项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章推荐"><span class="nav-number">7.</span> <span class="nav-text">文章推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">7.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">W.Z.H</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

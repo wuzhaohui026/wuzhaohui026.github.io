@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="这篇主要主要 ConstraintLayout 的相关属性，加上年纪大了，记性不好，方便自己以后忘了好看看的。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConstraintLayout 相关属性">
+<meta property="og:url" content="http:&#x2F;&#x2F;wuzhaohui026.github.io&#x2F;2018&#x2F;01&#x2F;18&#x2F;ConstraintLayout%20%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7&#x2F;index.html">
+<meta property="og:site_name" content="Hui 朝晖的 Blog">
+<meta property="og:description" content="这篇主要主要 ConstraintLayout 的相关属性，加上年纪大了，记性不好，方便自己以后忘了好看看的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;developer.android.google.cn&#x2F;reference&#x2F;android&#x2F;support&#x2F;constraint&#x2F;resources&#x2F;images&#x2F;relative-positioning-constraints.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;developer.android.google.cn&#x2F;reference&#x2F;android&#x2F;support&#x2F;constraint&#x2F;resources&#x2F;images&#x2F;relative-positioning-margin.png">
+<meta property="og:updated_time" content="2018-01-18T15:26:41.831Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;developer.android.google.cn&#x2F;reference&#x2F;android&#x2F;support&#x2F;constraint&#x2F;resources&#x2F;images&#x2F;relative-positioning-constraints.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wuzhaohui026.github.io/2018/01/18/ConstraintLayout 相关属性/"/>
+
+
+
+
+
+  <title>ConstraintLayout 相关属性 | Hui 朝晖的 Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hui 朝晖的 Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Android | Java</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuzhaohui026.github.io/2018/01/18/ConstraintLayout%20%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="W.Z.H">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui 朝晖的 Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ConstraintLayout 相关属性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-18T20:49:28+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇主要主要 ConstraintLayout 的相关属性，加上年纪大了，记性不好，方便自己以后忘了好看看的。</p>
+<a id="more"></a>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="相对定位"><a href="#相对定位" class="headerlink" title="相对定位"></a>相对定位</h3><p>以下属性都引用 id 另一个部件，或者 parent (将引用父容器，即 ConstraintLayout)：<br>假设有 A、B 两个控件。</p>
+<ul>
+<li>layout_constraintLeft_toLeftOf：A 控件与 B 控件左侧对齐；</li>
+<li>layout_constraintLeft_toRightOf：A 控件的左侧在 B 控件的右侧；</li>
+<li>layout_constraintRight_toLeftOf：A 控件的右侧在 B 控件的左侧；</li>
+<li>layout_constraintRight_toRightOf：A 控件与 B 控件右侧对齐；</li>
+<li>layout_constraintTop_toTopOf：A 控件与 B 控件顶部对齐；</li>
+<li>layout_constraintTop_toBottomOf：A 控件的顶部与 B 控件底部对齐；</li>
+<li>layout_constraintBottom_toTopOf：A 控件的底部与 B 控件顶部对齐；</li>
+<li>layout_constraintBottom_toBottomOf：A 控件与 B 控件底部对齐；</li>
+<li>layout_constraintBaseline_toBaselineOf：A 控件与 B 控件基线对齐；(看下图，自己找Baseline)</li>
+<li>layout_constraintStart_toEndOf：A 控件的开始处在 B 控件的结束处；</li>
+<li>layout_constraintStart_toStartOf：A 控件与 B 控件开始处对齐；</li>
+<li>layout_constraintEnd_toStartOf：A 控件的结束处在 B 控件的开始处;</li>
+<li>layout_constraintEnd_toEndOf：A 控件与 B 控件结束处对齐;<br><img src="https://developer.android.google.cn/reference/android/support/constraint/resources/images/relative-positioning-constraints.png" alt="相对定位"></li>
+</ul>
+<p>如果侧边距被设置，它们将被应用到相应的约束(如果存在的话)，强制边缘作为目标和源端之间的间隙。</p>
+<ul>
+<li>android:layout_marginStart：A 控件的开始处与 B 控件的边距；</li>
+<li>android:layout_marginEnd：A 控件的结束处与 B 控件的边距；</li>
+<li>android:layout_marginLeft：A 控件的左侧与 B 控件的边距；</li>
+<li>android:layout_marginTop：A 控件的顶部与 B 控件的边距；</li>
+<li>android:layout_marginRight：A 控件的右侧与 B 控件的边距；</li>
+<li>android:layout_marginBottom：A 控件的底部与 B 控件的边距<br><img src="https://developer.android.google.cn/reference/android/support/constraint/resources/images/relative-positioning-margin.png" alt="相对定位的边距"></li>
+</ul>
+<blockquote>
+<p>请注意，边距只能是正值或等于零，并且需要一个尺寸。</p>
+</blockquote>
+<p>当一个指定约束目标的可见性为View.GONE，还可以使用以下属性指示要使用的不同边距值。这个我是这样理解的，A 与 B 两个控件，A 与 B 约束，然后，B 控件设置 View.Gone  属性，此时 B 控件的位置消失，A 保留与 B 控件之间的边距。(如果错了欢迎指正啊)</p>
+<ul>
+<li>layout_goneMarginStart：A 控件与 B 控件开始处的边距；</li>
+<li>layout_goneMarginEnd：A 控件与 B 控件结束处的边距；</li>
+<li>layout_goneMarginLeft：A 控件与 B 控件左侧的边距；</li>
+<li>layout_goneMarginTop：A 控件与 B 控件顶部的边距；</li>
+<li>layout_goneMarginRight：A 控件与 B 控件右侧的边距；</li>
+<li>layout_goneMarginBottom：A 控件与 B 控件底部的边距；</li>
+</ul>
+<h3 id="Bias-偏差的意思吧"><a href="#Bias-偏差的意思吧" class="headerlink" title="Bias(偏差的意思吧)"></a>Bias(偏差的意思吧)</h3><ul>
+<li>layout_constraintHorizontal_bias：水平方向的偏差；</li>
+<li>layout_constraintVertical_bias：垂直方向的偏差；</li>
+</ul>
+<blockquote>
+<p>使用百分比</p>
+</blockquote>
+<h3 id="循环定位"><a href="#循环定位" class="headerlink" title="循环定位"></a>循环定位</h3><ul>
+<li>layout_constraintCircle：引用其他控件的 id；</li>
+<li>layout_constraintCircleRadius：到其他小部件中心的距离；</li>
+<li>layout_constraintCircleAngle：小部件应该在哪个角度（度数，从0到360）；</li>
+</ul>
+<h3 id="ConstraintLayout上的最小-最大尺寸"><a href="#ConstraintLayout上的最小-最大尺寸" class="headerlink" title="ConstraintLayout上的最小/最大尺寸"></a>ConstraintLayout上的最小/最大尺寸</h3><ul>
+<li>android:minWidth：设置布局的最小宽度；</li>
+<li>android:minHeight：设置布局的最小高度；</li>
+<li>android:maxWidth：设置布局的最大宽度；</li>
+<li>android:maxHeight：设置布局的最大高度；</li>
+</ul>
+<blockquote>
+<p>注意，给控件设置尺寸的时候，可以这样来做</p>
+</blockquote>
+<ol>
+<li>使用一个特定的大小；</li>
+<li>使用WRAP_CONTENT，这将要求小部件计算自己的大小；</li>
+<li>使用0dp，相当于”MATCH_CONSTRAINT”</li>
+</ol>
+<h3 id="MATCH-CONSTRAINT尺寸"><a href="#MATCH-CONSTRAINT尺寸" class="headerlink" title="MATCH_CONSTRAINT尺寸"></a>MATCH_CONSTRAINT尺寸</h3><p>当维度设置为时MATCH_CONSTRAINT，默认行为是使得到的大小占用所有可用空间。</p>
+<ul>
+<li>layout_constraintWidth_min 和 layout_constraintHeight_min：将设置这个尺寸的最小尺寸</li>
+<li>layout_constraintWidth_max 和 layout_constraintHeight_max：将为此尺寸设置最大尺寸</li>
+<li>layout_constraintWidth_percent 和 layout_constraintHeight_percent：将这个尺寸的大小设置为父级的百分比</li>
+</ul>
+<h3 id="百分比尺寸"><a href="#百分比尺寸" class="headerlink" title="百分比尺寸"></a>百分比尺寸</h3><p>要使用百分比，您需要设置以下内容：</p>
+<ul>
+<li>尺寸应该设置为 MATCH_CONSTRAIN(0dp);</li>
+<li>默认值应设置为百分比 app:layout_constraintWidth_default=”percent” 或 app:layout_constraintHeight_default=”percent”<br>(注意：这在1.1-beta1和1.1-beta2中是必须的，但如果定义percent属性，则在以下版本中不需要)；</li>
+<li>然后将 layout_constraintWidth_percent 或 layout_constraintHeight_percent 属性设置为介于0和1之间的值。</li>
+</ul>
+<h3 id="Ratio"><a href="#Ratio" class="headerlink" title="Ratio"></a>Ratio</h3><p>控件之间的占位比。<br>需要设置一个约束尺寸0dp(即MATCH_CONSTRAINT)，并将该属性 layout_constraintDimensionRatio 设置为给定的比率。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                 <span class="attr">android:layout_height</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">                 <span class="attr">app:layout_constraintDimensionRatio</span>=<span class="string">"1:1"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<p>参考：<br><a href="https://developer.android.google.cn/reference/android/support/constraint/ConstraintLayout.html" target="_blank" rel="noopener">官方文档中关于ConstraintLayout的部分</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/16/ConstraintLayout%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="ConstraintLayout的使用">
+                <i class="fa fa-chevron-left"></i> ConstraintLayout的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/20/%E6%80%8E%E4%B9%88%E5%9C%A8%E4%BD%A0%E7%9A%84App%E9%87%8C%E9%9B%86%E6%88%90%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD/" rel="prev" title="怎么在你的App里集成支付功能">
+                怎么在你的App里集成支付功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="W.Z.H" />
+          <p class="site-author-name" itemprop="name">W.Z.H</p>
+           
+              <p class="site-description motion-element" itemprop="description">WZH's Blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wuzhaohui026" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="wuzhaohui1993@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-email"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hukai.me/" title="胡凯" target="_blank">胡凯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://m.kuaidi100.com/" title="快递查询" target="_blank">快递查询</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相对定位"><span class="nav-number">1.1.</span> <span class="nav-text">相对定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bias-偏差的意思吧"><span class="nav-number">1.2.</span> <span class="nav-text">Bias(偏差的意思吧)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环定位"><span class="nav-number">1.3.</span> <span class="nav-text">循环定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConstraintLayout上的最小-最大尺寸"><span class="nav-number">1.4.</span> <span class="nav-text">ConstraintLayout上的最小/最大尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MATCH-CONSTRAINT尺寸"><span class="nav-number">1.5.</span> <span class="nav-text">MATCH_CONSTRAINT尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#百分比尺寸"><span class="nav-number">1.6.</span> <span class="nav-text">百分比尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ratio"><span class="nav-number">1.7.</span> <span class="nav-text">Ratio</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">W.Z.H</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React Native," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="早就听说RN了，一直想去了解下，正好最近有空就来学习下并在博客里记录下自己的学习所得，不对之处望大家指出。">
+<meta name="keywords" content="React Native">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native 之 Windows 下搭建开发环境">
+<meta property="og:url" content="http:&#x2F;&#x2F;wuzhaohui026.github.io&#x2F;2017&#x2F;06&#x2F;04&#x2F;React%20Native%E4%B9%8BWindows%E4%B8%8B%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83&#x2F;index.html">
+<meta property="og:site_name" content="Hui 朝晖的 Blog">
+<meta property="og:description" content="早就听说RN了，一直想去了解下，正好最近有空就来学习下并在博客里记录下自己的学习所得，不对之处望大家指出。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;281665-226ddf6afab5f41b.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;nodejs.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;npm-v.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.devio.org&#x2F;img&#x2F;post&#x2F;20160520&#x2F;npm%20install%20-g%20react-native-cli.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;buildRN.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.devio.org&#x2F;img&#x2F;post&#x2F;20160520&#x2F;FirstApp-android.png">
+<meta property="og:updated_time" content="2017-06-04T12:42:54.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;7xq2jk.com1.z0.glb.clouddn.com&#x2F;281665-226ddf6afab5f41b.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wuzhaohui026.github.io/2017/06/04/React Native之Windows下搭建开发环境/"/>
+
+
+
+
+
+  <title>React Native 之 Windows 下搭建开发环境 | Hui 朝晖的 Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hui 朝晖的 Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Android | Java</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wuzhaohui026.github.io/2017/06/04/React%20Native%E4%B9%8BWindows%E4%B8%8B%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="W.Z.H">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui 朝晖的 Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Native 之 Windows 下搭建开发环境</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-04T18:30:11+08:00">
+                2017-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>早就听说RN了，一直想去了解下，正好最近有空就来学习下并在博客里记录下自己的学习所得，不对之处望大家指出。</p>
+<a id="more"></a>
+
+<h1 id="什么是React-Native"><a href="#什么是React-Native" class="headerlink" title="什么是React Native"></a>什么是React Native</h1><p><img src="http://7xq2jk.com1.z0.glb.clouddn.com/281665-226ddf6afab5f41b.png" alt=""><br>React Native 诞生于2015年，是一套跨平台、动态更新的JavaScript框架，号称：<strong>Learn once, write anywhere：Build mobile apps with React！</strong><br>学习资料：<a href="http://reactnative.cn/docs/0.44/getting-started.html" target="_blank" rel="noopener">React Native中文网</a><br>话不多说，正式进入开发环境的搭建吧。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>在 Windows 平台上开发 React Native 需要安装以下环境和工具：</p>
+<ul>
+<li>Node.js</li>
+<li>Android Studio</li>
+</ul>
+<h1 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h1><p>React Native 开发需要用到Node.js环境。我们做 React Native 开发会经常性的和 Node.js 进行打交道。</p>
+<p>安装 Node.js 有两种常见的方法：</p>
+<ol>
+<li>一种是通过Windows包管理工具Chocolatey来安装。<br> 看官网就觉得这种方法太复杂了，就没用。</li>
+<li>第二种就是直接去Node.js官网下载安装包来进行安装。</li>
+</ol>
+<p>接下来我们来介绍下第二种方法吧。</p>
+<p><a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">下载Node.js</a><br>如图 <img src="http://7xq2jk.com1.z0.glb.clouddn.com/nodejs.png" alt=""><br>下载完成后，双击下载好的<strong>.msi</strong>文件安装即可，安装完成后，win+R，输入cmd打开终端，输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<p>即可查看当前的Node.js版本<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/npm-v.png" alt=""></p>
+<h1 id="安装React-Native命令行工具"><a href="#安装React-Native命令行工具" class="headerlink" title="安装React Native命令行工具"></a>安装React Native命令行工具</h1><p>安装好了node.js，我们通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>来安装React Native命令行工具了。<br>win+R，输入cmd打开终端，输入并执行下面命令即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g recat-native-cli</span><br></pre></td></tr></table></figure>
+
+<p>图我没有，只好盗用<a href="http://www.devio.org/2016/05/20/React-Native-development-environment-build-Windows-platform/" target="_blank" rel="noopener">Windows平台搭建React Native开发环境</a>的图了<br><img src="http://www.devio.org/img/post/20160520/npm%20install%20-g%20react-native-cli.png" alt=""></p>
+<h1 id="安装Android-Studio"><a href="#安装Android-Studio" class="headerlink" title="安装Android Studio"></a>安装Android Studio</h1><p>这个就不说了吧，烂大街了都。。。。</p>
+<p>好了，这样环境搭建好了，我们来试着创建第一个React Native 应用吧</p>
+<h1 id="创建第一个React-Native应用"><a href="#创建第一个React-Native应用" class="headerlink" title="创建第一个React Native应用"></a>创建第一个React Native应用</h1><p>win+R，输入cmd打开终端，输入并执行下面命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">react-native init &lt;项目名字&gt;</span><br><span class="line">如：</span><br><span class="line">react-native init FirstApp</span><br></pre></td></tr></table></figure>
+<p>如图<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/buildRN.png" alt=""><br>项目结构如图<br><img src="http://7xq2jk.com1.z0.glb.clouddn.com/%E7%BB%93%E6%9E%84.png" alt=""><br>其中 <strong>android</strong>目录是Android项目。</p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>React Native应用创建完成之后便可以运行它了，运行一个React Native应用通常有两种方式：</p>
+<ol>
+<li>通过React Native命令行工具<br>win+R，输入cmd打开终端，输入并执行下面命令即可</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">react-native run-android</span><br><span class="line">//如果要运行iOS项目则通过下面命令</span><br><span class="line">react-native run-ios</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过AndroidStudio运行我们的项目<br>将目录里的android目录导入AS中即可。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这里有个问题就是导入的时候注意下gradle的版本问题。</span><br><span class="line">可以去项目的gradle-&gt;wrapper-&gt;gradle-wrapper修改</span><br><span class="line">还有就是导入的过程可能会比较漫长。</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后如图<br><img src="http://www.devio.org/img/post/20160520/FirstApp-android.png" alt=""></p>
+<hr>
+<p>参考：<br><a href="http://www.devio.org/2016/05/20/React-Native-development-environment-build-Windows-platform/" target="_blank" rel="noopener">Windows平台搭建React Native开发环境</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React-Native/" rel="tag"># React Native</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/11/Android%E5%A1%AB%E5%9D%91%E4%B9%8B%E8%B7%AF/" rel="next" title="Android填坑之路">
+                <i class="fa fa-chevron-left"></i> Android填坑之路
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/04/%E7%90%86%E8%A7%A3MeasureSpec/" rel="prev" title="理解MeasureSpec">
+                理解MeasureSpec <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="W.Z.H" />
+          <p class="site-author-name" itemprop="name">W.Z.H</p>
+           
+              <p class="site-description motion-element" itemprop="description">WZH's Blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wuzhaohui026" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="wuzhaohui1993@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-email"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hukai.me/" title="胡凯" target="_blank">胡凯</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://m.kuaidi100.com/" title="快递查询" target="_blank">快递查询</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是React-Native"><span class="nav-number">1.</span> <span class="nav-text">什么是React Native</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Node-js"><span class="nav-number">3.</span> <span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装React-Native命令行工具"><span class="nav-number">4.</span> <span class="nav-text">安装React Native命令行工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Android-Studio"><span class="nav-number">5.</span> <span class="nav-text">安装Android Studio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建第一个React-Native应用"><span class="nav-number">6.</span> <span class="nav-text">创建第一个React Native应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行"><span class="nav-number">7.</span> <span class="nav-text">运行</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">W.Z.H</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
